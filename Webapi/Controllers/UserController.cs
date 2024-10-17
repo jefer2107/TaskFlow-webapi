@@ -1,3 +1,5 @@
+using Application.DTOs.User;
+using Application.Interfaces;
 using Domain.Entities;
 using Domain.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -6,17 +8,17 @@ namespace Webapi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class UserController(IUserRepository userRepository) 
+public class UserController(IUserService userService) 
 : ControllerBase
 {
-    private readonly IUserRepository _userReporitory = userRepository;
+    private readonly IUserService _userService = userService;
 
     [HttpGet("/users")]
-    public async Task<ActionResult<IEnumerable<User>>> FindAll()
+    public async Task<ActionResult<IEnumerable<UserDTO>>> FindAll()
     {
         try
         {
-            IEnumerable<User> users = await _userReporitory.FindAll();
+            IEnumerable<UserDTO> users = await _userService.FindAll();
             
             return Ok(users);
         }

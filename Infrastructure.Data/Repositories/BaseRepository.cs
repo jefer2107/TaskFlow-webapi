@@ -1,3 +1,4 @@
+using Domain;
 using Domain.Entities;
 using Domain.Interface;
 using Infrastructure.Data.Context;
@@ -25,24 +26,93 @@ public class BaseRepository<T>(AppDbContext dbContext)
         }
     }
 
-    public Task<T> FindOne(int id)
+    public async Task<T> FindOne(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            T model = await _dbContext.Set<T>()
+            .FirstOrDefaultAsync(e => e.Id == id);
+
+            return model;
+        }
+        catch (Exception error)
+        {
+            
+            Console.WriteLine($"Error in method FindOne {typeof(T)}");
+            throw new Exception(error.ToString());
+        }
     }
 
-    public Task<T> Create(T model)
+    public async Task<T> Create(T model)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var modelCreated = await _dbContext.Set<T>()
+            .AddAsync(model);
+
+            return modelCreated.Entity;
+        }
+        catch (Exception error)
+        {
+            
+            Console.WriteLine($"Error in method Create {typeof(T)}: {error}");
+            throw new Exception(error.Message);
+        }
     }
 
-    public Task<T> Update(int id, T model)
+    public async Task<T> Update(int id, T model)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var modelById = await FindOne(id);
+
+            if(modelById == null)
+            {
+                throw new Exception($"ID:{id} não encontrado");
+            }
+            else
+            {
+                
+                CopyProperties<T>.Set(model, modelById);
+                
+                 _dbContext.Set<T>().Entry(modelById).State = EntityState.Modified;
+
+                return modelById;
+            }
+        }
+        catch (Exception error)
+        {
+            
+            Console.WriteLine($"Error in method Update {typeof(T)}");
+            throw new Exception(error.Message);
+        }
     }
 
-    public Task<bool> Delete(int id)
+    public async Task<bool> Delete(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var modelById = await FindOne(id);
+
+            if(modelById == null)
+            {
+                throw new Exception($"ID:{id} não encontrado");
+            }
+            else
+            {
+                var modelDeleted = _dbContext.Set<T>()
+                .Remove(modelById);
+
+                if(modelDeleted == null) return false;
+                else return true;
+            }
+        }
+        catch (Exception error)
+        {
+            
+            Console.WriteLine($"Error in method Delete {typeof(T)}");
+            throw new Exception(error.Message);
+        }
     }
 
 }

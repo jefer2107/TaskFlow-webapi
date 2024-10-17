@@ -1,3 +1,6 @@
+using Application.Interfaces;
+using Application.Mapping;
+using Application.Services;
 using Domain.Interface;
 using Infrastructure.Data.Context;
 using Infrastructure.Data.Repositories;
@@ -22,7 +25,10 @@ public static class DependencyInjection
             )
         );
 
+        services.AddAutoMapper(typeof(DomainDtoToMappingProfile));
+
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserService, UserService>();
 
         return services;
     }

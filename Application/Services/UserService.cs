@@ -6,11 +6,12 @@ using Domain.Interface;
 
 namespace Application.Services;
 
-public class UserService(IUserRepository userRepository, IMapper mapper) 
+public class UserService(IUserRepository userRepository, IMapper mapper, IUnityOfWork uof) 
 : IUserService
 {
     private readonly IUserRepository _userRepository = userRepository;
     private readonly IMapper _mapper = mapper;
+    private readonly IUnityOfWork _uof = uof;
 
     public async Task<IEnumerable<UserDTO>> FindAll()
     {
@@ -63,6 +64,8 @@ public class UserService(IUserRepository userRepository, IMapper mapper)
 
             var userCreated = await _userRepository.Create(user);
 
+            await _uof.Commit();
+
             return _mapper.Map<UserDTO>(userCreated);
         }
         catch (Exception error)
@@ -86,6 +89,8 @@ public class UserService(IUserRepository userRepository, IMapper mapper)
             var user = _mapper.Map<User>(model);
 
             var userUpdated = await _userRepository.Update(id, user);
+
+            await _uof.Commit();
 
             return _mapper.Map<UserDTO>(userUpdated);
         }
@@ -112,6 +117,8 @@ public class UserService(IUserRepository userRepository, IMapper mapper)
 
             var result = await _userRepository.Delete(id);
             if(!result) throw new Exception($"Error in user services method Delete");
+
+            await _uof.Commit();
 
             return result;
         }

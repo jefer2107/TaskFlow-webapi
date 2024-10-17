@@ -11,5 +11,8 @@ public class DomainDtoToMappingProfile : Profile
     {
         CreateMap<EntityModel, EntityModelDTO>().ReverseMap();
         CreateMap<User, UserDTO>().ReverseMap();
+        CreateMap<User, UserInputCreateDTO>().ReverseMap();
+        CreateMap<User, UserInputUpdateDTO>().ReverseMap();
+        CreateMap<User, UserInputAuthenticateDTO>().ReverseMap();
     }
 }

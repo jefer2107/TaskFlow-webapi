@@ -1,4 +1,5 @@
 using Domain.Entities;
+using Infrastructure.Data.EntitiesConfiguration;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +20,8 @@ public class AppDbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
 
     }
 

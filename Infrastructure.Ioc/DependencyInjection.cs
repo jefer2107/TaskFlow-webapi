@@ -3,6 +3,7 @@ using Application.Mapping;
 using Application.Services;
 using Domain.Interface;
 using Infrastructure.Data.Context;
+using Infrastructure.Data.Identity;
 using Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -30,6 +31,7 @@ public static class DependencyInjection
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IUnityOfWork, UnityOfWork>();
+        services.AddScoped<IAuthentication, Authentication>();
 
         return services;
     }

@@ -6,7 +6,7 @@ namespace Infrastructure.Data.Repositories;
 public class UnityOfWork(AppDbContext context) : IUnityOfWork
 {
     private readonly AppDbContext _context = context;
-    public Task Commit()
+    public async Task Commit()
     {
         await _context.SaveChangesAsync();
     }

@@ -15,6 +15,8 @@ public class AppDbContext
     }
 
     public DbSet<User> Users { get; set; }
+    public DbSet<Chore> Chores { get; set; }
+    public DbSet<Category> Categories { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -22,6 +24,8 @@ public class AppDbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
 
         modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new ChoreConfiguration());
+        modelBuilder.ApplyConfiguration(new CategoryConfiguration());
 
     }
 

@@ -160,4 +160,82 @@ public class ChoreService(
         }
     }
 
+    public async Task<ChoreDTO> FindOneByUser(int id, int userId)
+    {
+        try
+        {
+            Chore chore = await _choreRepository.FindOneByUser(id, userId);
+            return _mapper.Map<ChoreDTO>(chore);
+        }
+        catch (Exception error)
+        {
+            
+            if(error.InnerException != null)
+                throw new Exception(
+                    $"Error in chore services method FindOneByUser: {error.InnerException}"
+                );
+
+            throw new Exception(
+                $"Error in chore services method FindOneByUser: {error.Message}"
+            );
+        }
+    }
+
+    public async Task<bool> DeleteByUser(int id, int userId)
+    {
+        try
+        {
+            var choreById = await FindOneByUser(id, userId) ?? 
+            throw new Exception(
+                $"Error in chore services method Delete: user id:{id} or userId:{userId} not found"
+            );
+
+
+            bool choreDeleted = await _choreRepository.Delete(id);
+
+            return choreDeleted;
+        }
+        catch (Exception error)
+        {
+            
+            if(error.InnerException != null)
+                throw new Exception(
+                    $"Error in chore services method FindOne: {error.InnerException}"
+                );
+
+            throw new Exception(
+                $"Error in chore services method FindOne: {error.Message}"
+            );
+        }
+    }
+
+    public async Task<ChoreDTO> UpdateByUser(int id, int userId, ChoreInputUpdateDTO model)
+    {
+        try
+        {
+            var choreById = await FindOneByUser(id, userId) ?? 
+            throw new Exception(
+                $"Error in chore services method Delete: user id:{id} or userId:{userId} not found"
+            );
+
+            Chore chore = _mapper.Map<Chore>(model);
+
+            Chore choreUpdated = await _choreRepository.Update(id, chore);
+
+            return _mapper.Map<ChoreDTO>(choreUpdated);
+        }
+        catch (Exception error)
+        {
+            
+            if(error.InnerException != null)
+                throw new Exception(
+                    $"Error in chore services method FindOne: {error.InnerException}"
+                );
+
+            throw new Exception(
+                $"Error in chore services method FindOne: {error.Message}"
+            );
+        }
+    }
+
 }

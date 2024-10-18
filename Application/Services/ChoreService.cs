@@ -67,6 +67,8 @@ public class ChoreService(
 
             var choreCreated = await _choreRepository.Create(chore);
 
+            await _uof.Commit();
+
             return _mapper.Map<ChoreDTO>(choreCreated);
         }
         catch (Exception error)
@@ -87,12 +89,14 @@ public class ChoreService(
     {
         try
         {
-            var choreById = FindOne(id) ?? 
+            var choreById = await FindOne(id) ?? 
             throw new Exception($"Error in chore services method Update: user id:{id} not found");
 
             Chore chore = _mapper.Map<Chore>(model);
 
             Chore choreUpdated = await _choreRepository.Update(id, chore);
+
+            await _uof.Commit();
 
             return _mapper.Map<ChoreDTO>(choreUpdated);
         }
@@ -114,11 +118,13 @@ public class ChoreService(
     {
         try
         {
-            var choreById = FindOne(id) ?? 
+            var choreById = await FindOne(id) ?? 
             throw new Exception($"Error in chore services method Delete: user id:{id} not found");
 
 
             bool choreDeleted = await _choreRepository.Delete(id);
+
+            await _uof.Commit();
 
             return choreDeleted;
         }
@@ -193,6 +199,8 @@ public class ChoreService(
 
             bool choreDeleted = await _choreRepository.Delete(id);
 
+            await _uof.Commit();
+
             return choreDeleted;
         }
         catch (Exception error)
@@ -221,6 +229,8 @@ public class ChoreService(
             Chore chore = _mapper.Map<Chore>(model);
 
             Chore choreUpdated = await _choreRepository.Update(id, chore);
+
+            await _uof.Commit();
 
             return _mapper.Map<ChoreDTO>(choreUpdated);
         }

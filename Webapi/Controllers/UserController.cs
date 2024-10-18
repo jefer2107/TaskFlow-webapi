@@ -50,7 +50,7 @@ public class UserController(
         try
         {
 
-            UserDTO user = await _userService.FindOne(id);
+            UserDTO user = await _userService.FindUserWithoutChoreWithCategory(id);
 
             if(user == null)
             {

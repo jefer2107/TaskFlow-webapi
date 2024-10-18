@@ -150,6 +150,8 @@ public class UserService(
                     );
             }
 
+            user.UpdatedAt = DateTime.UtcNow;
+
             var userUpdated = await _userRepository.Update(id, user);
             await _uof.Commit();
 
@@ -311,4 +313,29 @@ public class UserService(
             );
         }
     }
+
+    public async Task<UserDTO> FindUserWithoutChoreWithCategory(int id)
+    {
+        try
+        {
+            UserDTO user = await FindOne(id);
+
+            user.Chores = user.Chores.Where(x => x.CategoryId == null).ToList();
+
+            return user;
+        }
+        catch (Exception error)
+        {
+            
+            if(error.InnerException != null)
+                throw new Exception(
+                    $"Error in user services method FindUserWithoutCategory: {error.InnerException}"
+                );
+
+            throw new Exception(
+                $"Error in user services method FindUserWithoutCategory: {error.Message}"
+            );
+        }
+    }
+
 }

@@ -65,6 +65,7 @@ public class Authentication(
             {
                 new Claim(JwtRegisteredClaimNames.UniqueName, userByEmail.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim("Id", userByEmail.Id.ToString()),
                 new Claim("Name", userByEmail.Name),
                 new Claim("Email", userByEmail.Email)
             };

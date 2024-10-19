@@ -16,8 +16,8 @@ public class CategoryConfiguration
         .IsRequired()
         .HasColumnType("varchar(30)");
 
-        builder.HasOne<User>()
-        .WithMany()
+        builder.HasOne(x => x.User)
+        .WithMany(x => x.Categories)
         .HasForeignKey(x => x.UserId)
         .OnDelete(DeleteBehavior.Cascade);
     }

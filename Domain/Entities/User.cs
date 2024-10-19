@@ -6,4 +6,5 @@ public class User : EntityModel
     public required string Email { get; set; }
     public required string Password { get; set; }
     public ICollection<Chore> Chores { get; set; } = [];
+    public ICollection<Category> Categories { get; set; } = [];
 }

@@ -24,7 +24,7 @@ public class ChoreConfiguration
         .HasForeignKey(x => x.UserId)
         .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne<Category>()
+        builder.HasOne(x => x.Category)
         .WithMany(x => x.Chores)
         .HasForeignKey(x => x.CategoryId);
 

@@ -7,5 +7,6 @@ public class Chore : EntityModel
     public required string Title { get; set; }
     public string Description { get; set; }
     public bool? IsCompleted { get; set; }
-    public User User { get; set; }
+    public User? User { get; set; }
+    public Category? Category { get; set; }
 }

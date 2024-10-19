@@ -6,4 +6,5 @@ public interface ICategoryRepository
 : IBaseRepository<Category>
 {
     Task<Category>? FindOneByUser(int id, int userId);
+    Task<IEnumerable<Category>> FindAllWithChores();
 }

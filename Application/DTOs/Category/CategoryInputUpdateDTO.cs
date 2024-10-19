@@ -1,6 +1,6 @@
 namespace Application.DTOs.Category;
 
-public class CategoryInputUpdateDTO : EntityModelDTO
+public class CategoryInputUpdateDTO
 {
     public int? UserId { get; set; }
     public string? Name { get; set; }

@@ -21,7 +21,7 @@ public class CategoryService(
     {
         try
         {
-            IEnumerable<Category> categories = await _categoryRepository.FindAll();
+            IEnumerable<Category> categories = await _categoryRepository.FindAllWithChores();
             return _mapper.Map<IEnumerable<CategoryDTO>>(categories);
         }
         catch (Exception error)
@@ -110,22 +110,22 @@ public class CategoryService(
         {
             Category category = _mapper.Map<Category>(model);
 
-            var choreCreated = await _categoryRepository.Create(category);
+            var categoryCreated = await _categoryRepository.Create(category);
 
             await _uof.Commit();
 
-            return _mapper.Map<CategoryDTO>(choreCreated);
+            return _mapper.Map<CategoryDTO>(categoryCreated);
         }
         catch (Exception error)
         {
             
             if(error.InnerException != null)
                 throw new Exception(
-                    $"Error in category services method FindOne: {error.InnerException}"
+                    $"Error in category services method Create: {error.InnerException}"
                 );
 
             throw new Exception(
-                $"Error in category services method FindOne: {error.Message}"
+                $"Error in category services method Create: {error.Message}"
             );
         }
     }

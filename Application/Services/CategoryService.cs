@@ -44,9 +44,9 @@ public class CategoryService(
         {
             IEnumerable<CategoryDTO> categories = await FindAll();
 
-            IEnumerable<CategoryDTO> newChores = categories.Where(x => x.UserId == userId).ToList();
+            IEnumerable<CategoryDTO> newCategories = categories.Where(x => x.UserId == userId).ToList();
 
-            return newChores;
+            return newCategories;
         }
         catch (Exception error)
         {

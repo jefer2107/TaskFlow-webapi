@@ -29,4 +29,22 @@ public class UserRepository(AppDbContext dbContext)
         }
     }
 
+    public async Task<User?> FindOneWithChores(int id)
+    {
+        try
+        {
+            User user = await _dbContext.Users
+            .Include(u => u.Chores)
+            .FirstOrDefaultAsync();
+
+            return user;
+        }
+        catch (Exception error)
+        {
+            
+            throw new Exception(
+                $"Error user repository in method FindOneWithChores: {error}"
+            );
+        }
+    }
 }

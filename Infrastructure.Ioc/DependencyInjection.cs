@@ -1,7 +1,11 @@
+using Application.DTOs.Category;
+using Application.DTOs.Chore;
 using Application.DTOs.User;
 using Application.Interfaces;
 using Application.Mapping;
 using Application.Services;
+using Application.Validations.Categories;
+using Application.Validations.Chores;
 using Application.Validations.Users;
 using Domain.Interface;
 using FluentValidation;
@@ -49,11 +53,23 @@ public static class DependencyInjection
         services.AddTransient<IValidator<ResetPasswordDTO>, UserResetPasswordValidator>();
         services.AddTransient<IValidator<ForgotPasswordDTO>, UserForgotPasswordValidator>();
 
+        services.AddTransient<IValidator<ChoreInputCreateDTO>, ChoreCreateValidator>();
+        services.AddTransient<IValidator<ChoreInputUpdateDTO>, ChoreUpdateValidator>();
+
+        services.AddTransient<IValidator<CategoryInputCreateDTO>, CategoryCreateValidator>();
+        services.AddTransient<IValidator<CategoryInputUpdateDTO>, CategoryUpdateValidator>();
+
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IUnityOfWork, UnityOfWork>();
         services.AddScoped<IAuthentication, Authentication>();
         services.AddScoped<IAuthorizationService, AuthorizationService>();
+
+        services.AddScoped<IChoreRepository, ChoreRepository>();
+        services.AddScoped<IChoreService, ChoreService>();
+
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<ICategoryService, CategoryService>();
 
         return services;
     }

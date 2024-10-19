@@ -16,14 +16,18 @@ public class DomainDtoToMappingProfile : Profile
         CreateMap<User, UserDTO>()
         .ForMember(dest => dest.Chores, opt => opt.MapFrom(src => src.Chores))
         .ReverseMap();
-
         CreateMap<User, UserInputCreateDTO>().ReverseMap();
         CreateMap<User, UserInputUpdateDTO>().ReverseMap();
         CreateMap<User, UserInputAuthenticateDTO>().ReverseMap();
 
         CreateMap<Chore, ChoreDTO>().ReverseMap();
+        CreateMap<Chore, ChoreInputCreateDTO>().ReverseMap();
+        CreateMap<Chore, ChoreInputUpdateDTO>().ReverseMap();
+
         CreateMap<Category, CategoryDTO>()
         .ForMember(dest => dest.Chores, opt => opt.MapFrom(src => src.Chores))
         .ReverseMap();
+        CreateMap<Category, CategoryInputCreateDTO>().ReverseMap();
+        CreateMap<Category, CategoryInputUpdateDTO>().ReverseMap();
     }
 }

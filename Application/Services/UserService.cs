@@ -48,7 +48,7 @@ public class UserService(
     {
         try
         {
-            User user = await _userRepository.FindOne(id);
+            User user = await _userRepository.FindOneWithChores(id);
             return user != null ? _mapper.Map<UserDTO>(user): null;
         }
         catch (Exception error)

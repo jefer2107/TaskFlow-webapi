@@ -76,11 +76,11 @@ public class ChoreService(
             
             if(error.InnerException != null)
                 throw new Exception(
-                    $"Error in chore services method FindOne: {error.InnerException}"
+                    $"Error in chore services method Create: {error.InnerException}"
                 );
 
             throw new Exception(
-                $"Error in chore services method FindOne: {error.Message}"
+                $"Error in chore services method Create: {error.Message}"
             );
         }
     }

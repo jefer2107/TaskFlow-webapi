@@ -36,13 +36,13 @@ public class ChoreController(
         }
     }
 
-    [HttpGet("/chore/{id}")]
-    public async Task<ActionResult<IEnumerable<ChoreDTO>>> FindOne(int id)
+    [HttpGet("/chore/{id}/user/{userId}")]
+    public async Task<ActionResult<IEnumerable<ChoreDTO>>> FindOne(int id, int userId)
     {
         try
         {
 
-            ChoreDTO chore = await _choreService.FindOne(id);
+            ChoreDTO chore = await _choreService.FindOneByUser(id, userId);
 
             if(chore == null)
             {

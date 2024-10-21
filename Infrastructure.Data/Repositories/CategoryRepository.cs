@@ -14,7 +14,9 @@ public class CategoryRepository(AppDbContext context)
     {
         try
         {
-            return await _context.Categories.Include(x => x.Chores).ToListAsync();
+            return await _context.Categories
+            .Include(x => x.Chores.OrderByDescending(c => c.UpdatedAt))
+            .ToListAsync();
         }
         catch (Exception error)
         {

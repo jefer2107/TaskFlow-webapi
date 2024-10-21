@@ -35,7 +35,7 @@ public class UserRepository(AppDbContext dbContext)
         {
             User user = await _dbContext.Users
             .Include(u => u.Chores)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(e => e.Id == id);
 
             return user;
         }
